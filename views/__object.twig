@@ -1,0 +1,28 @@
+{% extends "__layout.twig" %}
+{% from "/macroses/macros.twig" import btn as btn %}
+
+{% block content %}
+
+<div>
+    {{title}} - чудо человеческой фантазии
+</div>
+
+<div>
+     <div>
+        <ul class="gap-1 nav nav-pills nav-fill ">
+            <li >
+                {{btn("Info", info_url, true) }}
+            </li>
+            <li>
+                {{btn("Image", image_url, true) }}
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% block objectContent %}
+
+{% endblock %}
+
+{% endblock %}
+    
