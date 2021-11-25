@@ -25,9 +25,10 @@ require_once "../controllers/Controller404.php";
 
 // создаем загрузчик шаблонов, и указываем папку с шаблонами
 $loader = new \Twig\Loader\FilesystemLoader('../views');
-
-// создаем собственно экземпляр Twig с помощью которого будет рендерить
-$twig = new \Twig\Environment($loader);
+$twig = new \Twig\Environment($loader, [
+  "debug" => true // добавляем тут debug режим
+]);
+$twig->addExtension(new \Twig\Extension\DebugExtension()); // и активируем расширение
 
 $url = $_SERVER["REQUEST_URI"];
 
@@ -51,6 +52,8 @@ $menu = [
 ];
 $controller = new Controller404($twig);
 
+$pdo = new PDO("mysql:host=localhost;dbname=mangas;charset=utf8", "root", "");
+
 
 
 if ($url == "/") {
@@ -70,6 +73,7 @@ if ($url == "/") {
 }
 
 if ($controller) {
+  $controller->setPDO($pdo); // а тут передаем PDO в контроллер
   $controller->get();
 }
 
