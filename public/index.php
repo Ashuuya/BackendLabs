@@ -10,17 +10,13 @@
 </head>
 <body>
 <div class="container">
+
 <?php
 
-
 require_once "../vendor/autoload.php";
+require_once "../framework/autoload.php";
+require_once "../controllers/ObjectController.php";
 require_once "../controllers/MainController.php";
-require_once "../controllers/CsmController.php";
-require_once "../controllers/CsmImageController.php";
-require_once "../controllers/CsmInfoController.php";
-require_once "../controllers/HxhController.php";
-require_once "../controllers/HxhImageController.php";
-require_once "../controllers/HxhInfoController.php";
 require_once "../controllers/Controller404.php";
 
 // создаем загрузчик шаблонов, и указываем папку с шаблонами
@@ -29,8 +25,6 @@ $twig = new \Twig\Environment($loader, [
   "debug" => true // добавляем тут debug режим
 ]);
 $twig->addExtension(new \Twig\Extension\DebugExtension()); // и активируем расширение
-
-$url = $_SERVER["REQUEST_URI"];
 
 $title = "";
 $template = "";
@@ -50,37 +44,26 @@ $menu = [
     "url" => "/hunterxhunter",
   ]
 ];
-$controller = new Controller404($twig);
 
 $pdo = new PDO("mysql:host=localhost;dbname=mangas;charset=utf8", "root", "");
 
+// // создаем запрос к БД
+// $query = $pdo->query("SELECT DISTINCT type FROM titles ORDER BY 1");
+// // стягиваем данные
+// $types = $query->fetchAll();
+// // создаем глобальную переменную в $twig, которая будет достпна из любого шаблона
+// $twig->addGlobal("types", $types);
+
+$router = new Router($twig, $pdo);
+$router->add("/", MainController::class);
+$router->add("/titles/(?P<id>\d+)", ObjectController::class);
 
 
-if ($url == "/") {
-    $controller = new MainController($twig); // создаем экземпляр контроллера для главной страницы
-} elseif (preg_match("#^/chainsawman/image#", $url)){
-    $controller = new CsmImageController($twig);   
-} elseif (preg_match("#^/chainsawman/info#", $url)){
-    $controller = new CsmInfoController($twig);
-} elseif (preg_match("#/chainsawman#", $url)) {
-    $controller = new CsmController($twig);
-} elseif (preg_match("#^/hunterxhunter/image#", $url)){
-  $controller = new HxhImageController($twig);   
-} elseif (preg_match("#^/hunterxhunter/info#", $url)){
-  $controller = new HxhInfoController($twig);
-} elseif (preg_match("#/hunterxhunter#", $url)) {
-  $controller = new HxhController($twig);
-}
-
-if ($controller) {
-  $controller->setPDO($pdo); // а тут передаем PDO в контроллер
-  $controller->get();
-}
+$router->get_or_default(Controller404::class);
 
  $context['title'] = $title;
  $context['menu'] = $menu;
 
-// echo $twig ->render($template, $context);
 ?>
 </div> 
 </body>

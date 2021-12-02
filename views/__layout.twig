@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
           <a class="navbar-brand" href="/"><i class="fab fa-accessible-icon"></i></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,10 +22,22 @@
           </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    {% for item in menu %}
+                    <!-- {% for item in menu %}
                     <li class="nav-item">
                         <a href="{{item.url}}" class="nav-link {{ title == item.title ? 'active' }}">{{item.title}}</a>
                     </li>
+                    {% endfor %} -->
+                    <!-- Оставил ссылку на главную -->
+                    <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Main</a>
+                    </li>
+                    <!-- остальные заменил на цикл по типам -->
+                    {% for type in types %}
+                        <li class="nav-item">
+                            <!-- type.type -- выдает тип, 
+                                   а добавление |title делает первую букву с слова большой  -->
+                            <a class="nav-link" href="/?type={{ type.type }}">{{ type.type|title }}</a>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>

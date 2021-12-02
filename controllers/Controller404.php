@@ -1,7 +1,7 @@
 <?php
-require_once "TwigBaseController.php";
+require_once "BaseSpaceTwigController.php";
 
-class Controller404 extends TwigBaseController {
+class Controller404 extends BaseSpaceTwigController {
     public $template = "404.twig"; 
     public $title = "Страница не найдена";
 

@@ -1,7 +1,7 @@
 <?php
-require_once "TwigBaseController.php"; // импортим TwigBaseController
+require_once "BaseSpaceTwigController.php";
 
-class MainController extends TwigBaseController {
+class MainController extends BaseSpaceTwigController {
     public $template = "main.twig";
     public $title = "Главная";
     public function getContext(): array{
@@ -9,7 +9,15 @@ class MainController extends TwigBaseController {
         // вообще звездочку не рекомендуется использовать, но на первый раз пойдет
         $context = parent::getContext();
 
-        $query = $this->pdo->query("SELECT * FROM titles");
+        if (isset ($_GET['type'])) {
+            $query = $this->pdo->prepare("SELECT * FROM titles WHERE type = :type");
+            $query->bindValue("type", $_GET['type']);
+            $query->execute();
+        } else {
+            $query = $this->pdo->query("SELECT * FROM titles");
+        }
+
+        
         // стягиваем данные через fetchAll() и сохраняем результат в контекст
         $context['titles'] = $query->fetchAll();
 
