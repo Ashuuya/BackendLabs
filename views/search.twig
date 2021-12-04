@@ -9,36 +9,40 @@
 <div class="row g-1" >
 <div class="col">
 <select style = "height: 100%;" name="type" class="form-select form-select-lg mb-1" >
-<option value="Все">All</option>
+<option value="All">All</option>
 {% for type in types %}
 <option value="{{ type.type|title }}">{{ type.type|title }}</option>
 {% endfor %}
 </select>
 </div>
 <div class="col">
-<input style = "height: 100%;" type="text" class="form-control" name="name" placeholder="Title">
+<input style="height: 100%;" type="text" class="form-control" name="name" placeholder="Title">
 </div>
 <div class="col">
-<input style = "height: 100%;" type="text" class="form-control" name="info" placeholder="Info">
+<input style="height: 100%;" type="text" class="form-control" name="info" placeholder="Info">
 </div>
 <div class="col">
-<button style = " height: 100%; width: 100%" class = "btn btn-primary" type="submit">Find</button>
+<button style="height: 100%; width: 100%" class="btn btn-primary" type="submit">Find</button>
 </div>
 </div>
 
-<div class="mt-4">
-<ul class="list-group" >
+<div class="mt-4"> 
 {% for object in objects %}
-<div class="card" style="width: 18rem;">
-    <img src={{object.image}} class="card-img-top" class="nav-link" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">{{object.title}}</h5>
-      <p class="card-text">{{object.description}}</p>
-      <a href="/titles/{{object.id}}" class="btn btn-primary">Подробнее</a>
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src={{object.image}} class="card-img-top" class="nav-link" alt="...">
     </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{object.title}}</h5>
+        <p class="card-text">{{object.description}}</p>
+        <a href="/titles/{{object.id}}" class="btn btn-primary">Подробнее</a>
+      </div>
+    </div>
+  </div>
 </div>
 {% endfor %}
-</ul>
 </div>
 </form>
 
