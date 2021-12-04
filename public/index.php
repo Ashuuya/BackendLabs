@@ -21,9 +21,7 @@ require_once "../controllers/Controller404.php";
 require_once "../controllers/SearchController.php";
 require_once "../controllers/MangaTitleCreateController.php";
 require_once "../controllers/MangaTitleDeleteController.php";
-
-
-
+require_once "../controllers/MangaTitleUpdateController.php";
 
 // создаем загрузчик шаблонов, и указываем папку с шаблонами
 $loader = new \Twig\Loader\FilesystemLoader('../views');
@@ -62,11 +60,13 @@ $pdo = new PDO("mysql:host=localhost;dbname=mangas;charset=utf8", "root", "");
 
 $router = new Router($twig, $pdo);
 $router->add("/", MainController::class);
+$router->add("/titles/(?P<id>\d+)/edit", MangaTitleUpdateController::class);
+$router->add("/titles/(?P<id>\d+)/delete", MangaTitleDeleteController::class);
 $router->add("/titles/(?P<id>\d+)", ObjectController::class);
 $router->add("/search", SearchController::class);
 $router->add("/add", MangaTitleCreateController::class);
 // $router->add("/titles/delete", MangaTitleDeleteController::class);
-$router->add("/titles/(?P<id>\d+)/delete", MangaTitleDeleteController::class);
+
 
 $router->get_or_default(Controller404::class);
 

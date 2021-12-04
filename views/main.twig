@@ -12,9 +12,18 @@
         <form action="/titles/{{ object.id }}/delete" method="POST">
           <input type="hidden" name="id" value="{{ object.id }}">
           <button type="submit" class="btn btn-danger">
-            <i class="fas fa-times"></i>
+            <i class="fas fa-window-close"></i>
           </button>
         </form>
+      </div>
+      <div class="position-absolute" style="right: 4px; top: 45px">
+        <form action="/titles/{{ object.id }}/edit" method="GET">
+          <input type="hidden" name="id" value="{{ object.id }}">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-edit"></i>
+          </button>
+        </form>
+        <!-- <a href="/titles/{{ object.id }}/edit">lya</a> -->
       </div>
       <div>
         <img src={{ object.image }} style="object-fit:contain; width: 300px; height: 300px;  padding: 4px; margin-top: 5px;" class="nav-link">
