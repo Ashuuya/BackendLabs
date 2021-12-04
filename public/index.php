@@ -20,6 +20,9 @@ require_once "../controllers/MainController.php";
 require_once "../controllers/Controller404.php";
 require_once "../controllers/SearchController.php";
 require_once "../controllers/MangaTitleCreateController.php";
+require_once "../controllers/MangaTitleDeleteController.php";
+
+
 
 
 // создаем загрузчик шаблонов, и указываем папку с шаблонами
@@ -62,7 +65,8 @@ $router->add("/", MainController::class);
 $router->add("/titles/(?P<id>\d+)", ObjectController::class);
 $router->add("/search", SearchController::class);
 $router->add("/add", MangaTitleCreateController::class);
-
+// $router->add("/titles/delete", MangaTitleDeleteController::class);
+$router->add("/titles/(?P<id>\d+)/delete", MangaTitleDeleteController::class);
 
 $router->get_or_default(Controller404::class);
 

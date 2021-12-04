@@ -7,9 +7,17 @@
  {% block content %}
  <div class="d-flex flex-wrap justify-content-center" >
     {% for object in titles %}
-    <div class="d-flex flex-column justify-content-center" style="border: 1px solid gray; padding:5px; margin:5px;">
+    <div class="d-flex flex-column justify-content-center position-relative" style="border: 1px solid gray; padding:5px; margin:5px;">
+      <div class="position-absolute" style="right: 4px; top: 4px">
+        <form action="/titles/{{ object.id }}/delete" method="POST">
+          <input type="hidden" name="id" value="{{ object.id }}">
+          <button type="submit" class="btn btn-danger">
+            <i class="fas fa-times"></i>
+          </button>
+        </form>
+      </div>
       <div>
-        <img src={{ object.image }} style="object-fit:contain; width: 300px; height: 300px; border: 1px solid gray; padding: 4px; margin-top: 5px;" class="nav-link">
+        <img src={{ object.image }} style="object-fit:contain; width: 300px; height: 300px;  padding: 4px; margin-top: 5px;" class="nav-link">
       </div>
       <div class="d-flex" m>
         {{ btn(object.title, "/titles/"~object.id, true) }}
