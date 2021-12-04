@@ -16,6 +16,7 @@ EOL;
         $query->execute();
 
         $data = $query->fetch();
+
         $context['object'] = $data;
         parent::get($context);
     }
@@ -26,6 +27,7 @@ EOL;
         $description = $_POST['description'];
         $type = $_POST['type'];
         $info = $_POST['info'];
+        $id = $this->params['id'];
 
         $tmp_name = $_FILES['image']['tmp_name'];
         $name =  $_FILES['image']['name'];
@@ -35,8 +37,9 @@ EOL;
 
         // создаем текст запрос
         $sql = <<<EOL
-UPDATE INTO titles(title, description, type, info, image)
-VALUES(:title, :description, :type, :info, :image_url)
+UPDATE titles
+SET title = :title, description= :description, type = :type, info = :info, image = :image_url
+WHERE id = :id
 EOL;
 
         // подготавливаем запрос к БД
@@ -47,11 +50,11 @@ EOL;
         $query->bindValue("type", $type);
         $query->bindValue("info", $info);
         $query->bindValue("image_url", $image_url);
-        
+        $query->bindValue("id", $id);
         $query->execute();
         
-        $context['message'] = 'Congratulations! New cool title is there now!';
-        $context['id'] = $this->pdo->lastInsertId(); // получаем id нового добавленного объекта
+        $context['message'] = 'Congratulations! This cool title is updated now!';
+        $context['id'] = $this->params['id']; // получаем id изменённого объекта
         $this->get($context); // пробросили параметр
     }
 }

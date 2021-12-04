@@ -18,7 +18,7 @@
         </div>
         <div class="col-4">
             <label class="form-label">Description</label>
-            <input type="text" class="form-control" name="description">
+            <input type="text" class="form-control" name="description" value="{{object.description}}">
         </div>
         <div class="col-4">
             <label class="form-label">Type</label>
@@ -29,7 +29,7 @@
         </div>
         <div class="mb-3">
             <label for="formFileLg" class="form-label">Upload poster</label>
-            <input class="form-control form-control-lg" id="formFileLg" type="file" name="image">
+            <input class="form-control form-control-lg" id="formFileLg" type="file" name="image" value="{{object.image}}">
         </div>
         <div class="col-12">
             <textarea name="info" placeholder="Full description" class="form-control" rows="5">{{object.info}}</textarea>
