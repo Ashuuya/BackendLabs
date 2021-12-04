@@ -1,0 +1,16 @@
+{% extends "__layout.twig" %}
+
+{% block content %}
+    Поиск
+
+    <form action="">
+        <select name="object_type">
+            <option value="new">New</option>
+            <option value="old">Old</option>
+        </select>
+        <label>Title <input type="text" name="title"></label>
+
+        <button type="submit">Find</button>
+    </form>
+
+{% endblock %}
