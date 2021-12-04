@@ -1,0 +1,42 @@
+{% extends "__layout.twig" %}
+
+{% block content %}
+    <h1>Add Manga</h1>
+    <hr>
+
+    {% if message %}
+    <div class="alert alert-info">
+        {{message}}
+        <a href="/titles/{{id}}">View.</a>
+    </div>
+    {% endif %}
+
+    <form action="" enctype="multipart/form-data" method="POST" class="row g-3">
+        <div class="col-4">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" name="title">
+        </div>
+        <div class="col-4">
+            <label class="form-label">Description</label>
+            <input type="text" class="form-control" name="description">
+        </div>
+        <div class="col-4">
+            <label class="form-label">Type</label>
+            <select class="form-control" name="type">
+                <option value="New">New</option>
+                <option value="Old">Old</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="formFileLg" class="form-label">Upload poster</label>
+            <input class="form-control form-control-lg" id="formFileLg" type="file" name="image">
+        </div>
+        <div class="col-12">
+            <textarea name="info" placeholder="Full description" class="form-control" rows="5"></textarea>
+        </div>
+        <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+
+{% endblock %}
