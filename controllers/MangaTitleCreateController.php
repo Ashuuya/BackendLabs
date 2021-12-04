@@ -5,9 +5,7 @@ class MangaTitleCreateController extends BaseSpaceTwigController {
     public $template = "manga_title_create.twig";
 
     public function get(array $context) // добавили параметр
-    {
-        echo $_SERVER['REQUEST_METHOD'];
-        
+    {      
         parent::get($context); // пробросили параметр
     }
 
