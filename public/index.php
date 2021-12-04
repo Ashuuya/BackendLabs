@@ -67,7 +67,6 @@ $router->add("/search", SearchController::class);
 $router->add("/add", MangaTitleCreateController::class);
 // $router->add("/titles/delete", MangaTitleDeleteController::class);
 
-
 $router->get_or_default(Controller404::class);
 
  $context['title'] = $title;
