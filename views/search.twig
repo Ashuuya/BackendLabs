@@ -1,16 +1,45 @@
 {% extends "__layout.twig" %}
 
 {% block content %}
-    Поиск
+<h1 style="margin-left: 25px;">Search</h1>
 
-    <form action="">
-        <select name="object_type">
-            <option value="new">New</option>
-            <option value="old">Old</option>
-        </select>
-        <label>Title <input type="text" name="title"></label>
 
-        <button type="submit">Find</button>
-    </form>
+
+<form action="" class="mt-4" style="margin-left: 25px; width:60%; ">
+<div class="row g-1" >
+<div class="col">
+<select style = "height: 100%;" name="type" class="form-select form-select-lg mb-1" >
+<option value="Все">All</option>
+{% for type in types %}
+<option value="{{ type.type|title }}">{{ type.type|title }}</option>
+{% endfor %}
+</select>
+</div>
+<div class="col">
+<input style = "height: 100%;" type="text" class="form-control" name="name" placeholder="Title">
+</div>
+<div class="col">
+<input style = "height: 100%;" type="text" class="form-control" name="info" placeholder="Info">
+</div>
+<div class="col">
+<button style = " height: 100%; width: 100%" class = "btn btn-primary" type="submit">Find</button>
+</div>
+</div>
+
+<div class="mt-4">
+<ul class="list-group" >
+{% for object in objects %}
+<div class="card" style="width: 18rem;">
+    <img src={{object.image}} class="card-img-top" class="nav-link" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{object.title}}</h5>
+      <p class="card-text">{{object.description}}</p>
+      <a href="/titles/{{object.id}}" class="btn btn-primary">Подробнее</a>
+    </div>
+</div>
+{% endfor %}
+</ul>
+</div>
+</form>
 
 {% endblock %}

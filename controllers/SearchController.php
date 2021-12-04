@@ -11,7 +11,7 @@ class SearchController extends BaseSpaceTwigController {
         $title = isset($_GET['title']) ? $_GET['title'] : '';
 
         $sql = <<<EOL
-SELECT id, title
+SELECT id, title, image, description
 FROM titles
 WHERE (:title = '' OR title like CONCAT('%', :title, '%'))        
     AND (type = :type)
