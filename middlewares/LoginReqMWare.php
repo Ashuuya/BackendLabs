@@ -1,6 +1,6 @@
 <?php
 
-class LoginReqMWare extends BaseMiddleware{
+class LoginReqMWare extends BaseMiddleware {
     public function apply(BaseController $controller, array $context)
     {
         $query = $controller->pdo->prepare("SELECT username,password,id FROM users WHERE password= :my_password AND username= :my_username");
@@ -10,14 +10,7 @@ class LoginReqMWare extends BaseMiddleware{
         $query->execute();
         $data = $query->fetch();
 
-        // $context['username'] = $data['username'];
-        // $context['password'] = $data['password'];
-
-         // заводим переменные под правильный пароль
-
-         // берем значения которые введет пользователь
-
-         // сверяем с корректными
+        //сверяем с корректными данными из базы
          if (!$data) {
              // если не совпали, надо указать такой заголовок
              // именно по нему браузер поймет что надо показать окно для ввода юзера/пароля
