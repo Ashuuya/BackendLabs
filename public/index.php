@@ -22,6 +22,7 @@ require_once "../controllers/SearchController.php";
 require_once "../controllers/MangaTitleCreateController.php";
 require_once "../controllers/MangaTitleDeleteController.php";
 require_once "../controllers/MangaTitleUpdateController.php";
+require_once "../middlewares/LoginReqMWare.php";
 
 // создаем загрузчик шаблонов, и указываем папку с шаблонами
 $loader = new \Twig\Loader\FilesystemLoader('../views');
@@ -51,21 +52,18 @@ $menu = [
 
 $pdo = new PDO("mysql:host=localhost;dbname=mangas;charset=utf8", "root", "");
 
-// // создаем запрос к БД
-// $query = $pdo->query("SELECT DISTINCT type FROM titles ORDER BY 1");
-// // стягиваем данные
-// $types = $query->fetchAll();
-// // создаем глобальную переменную в $twig, которая будет достпна из любого шаблона
-// $twig->addGlobal("types", $types);
-
 $router = new Router($twig, $pdo);
 $router->add("/", MainController::class);
-$router->add("/titles/(?P<id>\d+)/edit", MangaTitleUpdateController::class);
-$router->add("/titles/(?P<id>\d+)/delete", MangaTitleDeleteController::class);
 $router->add("/titles/(?P<id>\d+)", ObjectController::class);
 $router->add("/search", SearchController::class);
-$router->add("/add", MangaTitleCreateController::class);
-// $router->add("/titles/delete", MangaTitleDeleteController::class);
+
+$router->add("/add", MangaTitleCreateController::class)
+       ->middleware(new LoginReqMWare());
+$router->add("/titles/(?P<id>\d+)/delete", MangaTitleDeleteController::class)
+       ->middleware(new LoginReqMWare());
+$router->add("/titles/(?P<id>\d+)/edit", MangaTitleUpdateController::class)
+       ->middleware(new LoginReqMWare());
+
 
 $router->get_or_default(Controller404::class);
 
