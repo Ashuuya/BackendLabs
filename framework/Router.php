@@ -4,6 +4,13 @@
 class Route {
     public string $route_regexp; // тут получается шаблона url
     public $controller; // а это класс контроллера
+    public array $middlewareList = []; // добавил массив под middleware
+    
+    // метод с помощью которого будем добавлять обработчик
+    public function middleware(BaseMiddleware $m) : Route {
+        array_push($this->middlewareList, $m);
+        return $this;
+    }
 
     // ну и просто конструктор
     public function __construct($route_regexp, $controller)
@@ -19,7 +26,7 @@ class Router {
      */
     protected $routes = []; // создаем поле -- список под маршруты и привязанные к ним контроллеры
 
-    protected $twig; // переменные под twig и pdo
+    protected $twig;
     protected $pdo;
 
     // конструктор
@@ -30,9 +37,14 @@ class Router {
     }
 
     // функция с помощью которой добавляем маршрут
-    public function add($route_regexp, $controller) {
-        // по сути просто пихает маршрут с привязанным контроллером в $routes
-        array_push($this->routes, new Route("#^$route_regexp$#", $controller));
+    // добавляем возвращаемый тип : Route 
+    public function add($route_regexp, $controller) : Route {
+        // создаем экземпляр маршрута
+        $route = new Route("#^$route_regexp$#", $controller);
+        array_push($this->routes, $route);
+        
+        // возвращаем как результат функции
+        return $route;
     }
 
     // функция которая должна по url найти маршрут и вызывать его функцию get
@@ -45,6 +57,7 @@ class Router {
 
         // фиксируем в контроллер $default_controller
         $controller = $default_controller;
+        $newRoute = null; // добавили переменную под маршрут
 
         $matches = [];
         // проходим по списку $routes 
@@ -52,6 +65,7 @@ class Router {
             // проверяем подходит ли маршрут под шаблон
             if (preg_match($route->route_regexp, $path, $matches)) {
                 $controller = $route->controller;
+                $newRoute = $route; // загоняем соответствующий url маршрут в переменную
                 break;
             }
         }
@@ -65,6 +79,12 @@ class Router {
         // и если является, то передает в него twig
         if ($controllerInstance instanceof TwigBaseController) {
             $controllerInstance->setTwig($this->twig);
+        }
+        // вызываем обработчики middleware, если такие есть
+        if ($newRoute) {
+            foreach ($newRoute->middlewareList as $m) {
+                $m->apply($controllerInstance, []);
+            }
         }
 
         // вызываем
