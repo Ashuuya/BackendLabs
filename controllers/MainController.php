@@ -16,6 +16,7 @@ class MainController extends BaseSpaceTwigController {
         } else {
             $query = $this->pdo->query("SELECT * FROM titles");
         }
+        $context['viewed_pages'] = array_reverse($_SESSION['viewed_pages']);
 
         
         // стягиваем данные через fetchAll() и сохраняем результат в контекст

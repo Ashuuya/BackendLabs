@@ -47,14 +47,28 @@
                     </li>
                 </ul>
             </div>
-            <form action="/set-welcome/">
-                <input type="text" name="message" class="form-control mr-2 ml-2">
-            </form>
         </div>
     </nav>
-    
-    {% block content %}
-        пустота
-    {% endblock %}
+    <div class="container">
+        <div class="row align-items-start">
+            <div class="col-9 align-self-start">
+                {% block content %}
+                Пустота
+                {% endblock %}
+            </div>
+            <div class="col-3 mt-4">
+                <p style="font-size: 1.25rem;">
+                    Последние просмотренные страницы:
+                </p>
+                <div class="list-group">
+                    {% for m in viewed_pages %}
+                    <li class="list-group-item list-group-item-action list-group-item-dark">
+                        {{m}}
+                    </li>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
