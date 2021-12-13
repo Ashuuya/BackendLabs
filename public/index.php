@@ -22,7 +22,9 @@ require_once "../controllers/SearchController.php";
 require_once "../controllers/MangaTitleCreateController.php";
 require_once "../controllers/MangaTitleDeleteController.php";
 require_once "../controllers/MangaTitleUpdateController.php";
+require_once "../controllers/SetWelcomeController.php";
 require_once "../middlewares/LoginReqMWare.php";
+
 
 // создаем загрузчик шаблонов, и указываем папку с шаблонами
 $loader = new \Twig\Loader\FilesystemLoader('../views');
@@ -63,6 +65,7 @@ $router->add("/titles/(?P<id>\d+)/delete", MangaTitleDeleteController::class)
        ->middleware(new LoginReqMWare());
 $router->add("/titles/(?P<id>\d+)/edit", MangaTitleUpdateController::class)
        ->middleware(new LoginReqMWare());
+$router->add("/set-welcome/", SetWelcomeController::class);
 
 
 $router->get_or_default(Controller404::class);

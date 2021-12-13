@@ -19,7 +19,9 @@ class ObjectController extends BaseSpaceTwigController {
         // передаем описание из БД в контекст
         $context['description'] = $data['description'];
         $context['id'] = $data['id'];
-        
+        $context["my_session_message"] = isset($_SESSION['welcome_message']) ? $_SESSION['welcome_message'] : "";
+        $context["messages"] = isset($_SESSION['messages']) ? $_SESSION['messages'] : "";
+
         if (isset($_GET['show'])){
             if(($_GET['show'])=="image"){
                 $context['is_image'] = true;
